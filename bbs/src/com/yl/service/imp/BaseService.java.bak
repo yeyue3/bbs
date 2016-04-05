@@ -16,7 +16,13 @@ import com.yl.service.inter.BaseInter;
 
 @Transactional
 public class BaseService implements BaseInter{
-	
+	//我不知道为什么这里用下面那种方法写调用方法时会报空指针的错，set方法明明进入了，半天都没看出来，暂时这样，回头再看
+	//public static final  IDao idao = (IDao) new ClassPathXmlApplicationContext("applicationContext.xml").getBean("hibernateUtil");
+	//public static final  SessionFactory sessionFactory = (SessionFactory) new ClassPathXmlApplicationContext("applicationContext.xml").getBean("sessionFactory");
+	/*
+	 * 终于搞对了，子类对象在被初始化时，由于没指定它具体的parent对象，
+	 * 会在初始化时，调用super()构造一个父类对象，而这个父类并没有被set注入，所以会报空。
+	 */
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
