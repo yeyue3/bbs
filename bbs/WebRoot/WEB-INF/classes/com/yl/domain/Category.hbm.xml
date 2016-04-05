@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping package="com.yl.domain">
+		<class name="Category" table="category">
+		<id name="id" type="java.lang.Integer">
+		<generator class="increment"/>
+		</id>
+		<!-- 
+		private Integer id;
+	private String name;
+	private Set<Board> boards;
+		 -->
+		
+		<property name="name" type="java.lang.String">
+	<column name="name" length="64" not-null="true"/>
+	</property>
+	<property name="description" type="java.lang.String">
+	<column name="description"/>
+	</property>
+	<set name="boards">
+	<key column="cate_id"></key>
+	<one-to-many class="Board"></one-to-many>
+	</set>
+	
+	</class>	
+	</hibernate-mapping>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+  <form-beans>
+  	<form-bean name="personForm" type="com.yl.web.forms.PersonForm"></form-bean>
+  	<form-bean name="postForm" type="com.yl.web.forms.PostForm"></form-bean>
+  	<form-bean name="replyForm" type="com.yl.web.forms.ReplyForm"></form-bean>
+  </form-beans>
+
+<global-forwards>
+<forward name="gotoMainUiAc" path="/mainUi.do?flag=gotoMainUi" />
+<forward name="err" path="/WEB-INF/err.jsp"></forward>
+<forward name="ok" path="/WEB-INF/ok.jsp"></forward>
+</global-forwards>
+  
+   <action-mappings>
+   <action path="/mainUi" 
+  type="com.yl.web.actions.gotoMainUiAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoMainUi" path="/WEB-INF/mainFrame.jsp" />
+  </action>
+  
+  <action path="/login" 
+  name="personForm"
+  type="com.yl.web.actions.LoginAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoLoginUi" path="/WEB-INF/login.jsp" />
+   <forward name="jumpAfterLogin" path="/WEB-INF/person/jump.jsp"></forward>
+  <forward name="gotoCateChooseAc" path="/post.do?flag=gotoCateChooseUi" />
+  <!-- 为了登录验证后发帖写的 -->
+    <forward name="gotoAddPostUi" path="/WEB-INF/post/addPost.jsp" />
+    <forward name="gotoaddReply" path="/reply.do?flag=addReply" />
+  </action>
+   
+  <action path="/category" 
+  type="com.yl.web.actions.CategoryAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoShowCateUi" path="/WEB-INF/category/showCategory.jsp" />
+  </action>
+  
+  <action path="/board" 
+  type="com.yl.web.actions.BoardAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoShowBoardUi" path="/WEB-INF/board/showBoard.jsp" />
+  </action>
+  
+  <action path="/post" 
+  name="postForm"
+  type="com.yl.web.actions.PostAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoShowPostUi" path="/WEB-INF/post/showPost.jsp" />
+  <forward name="gotoAddPostUi" path="/WEB-INF/post/addPost.jsp" />
+   <forward name="showAfterAddPost" path="/post.do?flag=gotoShowPostUi"></forward>
+  <forward name="gotoCateChooseUi" path="/WEB-INF/post/cateChoose.jsp" />
+  <forward name="gotoChangePostUi" path="/WEB-INF/post/changePost.jsp" />
+ 
+ <forward name="showAfterReply" path="/WEB-INF/post/showPost.jsp" />
+  </action>
+  
+   <action path="/person" 
+   name="personForm"
+  type="com.yl.web.actions.PersonAction" 
+  scope="request"
+  parameter="flag"
+  >
+  <forward name="gotoRegisterUi" path="/WEB-INF/person/registerUi.jsp" />
+  <forward name="gotoShowUserUi" path="/WEB-INF/person/showUser.jsp" />
+   <forward name="gotoChangeUserUi" path="/WEB-INF/person/fillPersonInfo.jsp" />
+  </action>
+  
+  <action path="/reply" 
+  name="replyForm"
+  type="com.yl.web.actions.ReplyAction" 
+  scope="request"
+  parameter="flag"
+  >
+   <forward name="gotoChangeReplyUi" path="/WEB-INF/reply/changeReply.jsp" />
+   <forward name="showAfterReply" path="/post.do?flag=showAfterReply" />
+  </action>
+  </action-mappings>
+  
+  <!--让spring接管struts的第一步, 配置代理请求处理 DelegatingRequestProcessor ,它的用户是 -->
+  <controller>
+ <set-property property="processorClass" value="org.springframework.web.struts.DelegatingRequestProcessor"/>
+</controller> 
+   <message-resources parameter="com.yl.struts.ApplicationResources" />
+     
+  </struts-config>
+  

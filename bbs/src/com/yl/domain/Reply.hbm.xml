@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping package="com.yl.domain">
+		<class name="Reply" table="Reply">
+		<id name="id" type="java.lang.Integer">
+		<generator class="increment"/>
+		</id>	
+	<!-- 
+	private String content;
+	private Integer floor;
+	private String ipCreated;
+	
+	private Person author;//回复人
+	private Post post;//回复的帖子
+	 -->
+	 <property name="content" type="java.lang.String">
+	<column name="content" length="500" not-null="true"/>
+	</property>
+	<property name="floor" type="java.lang.Integer">
+	<column name="floor" />
+	</property>
+	
+	<many-to-one name="author" column="author_id"></many-to-one>
+	<many-to-one name="post" column="post_id"></many-to-one>
+		</class>
+	
+	</hibernate-mapping>

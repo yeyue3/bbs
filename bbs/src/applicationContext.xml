@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+<!-- 配置数据源 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/bbs"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="111111"/>
+	     <!-- 连接池启动时的初始值 -->
+	<property name="initialSize" value="3"/>
+	 <!-- 连接池的最大值 -->
+	 <property name="maxActive" value="500"/>
+ <!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
+	<property name="maxIdle" value="2"/>
+	<!--  最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
+	<property name="minIdle" value="1"/>
+</bean>
+<!-- 配置会话工厂 -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+     <property name="dataSource" ref="dataSource"/>
+     <property name="mappingResources">
+	    <list>
+	      <value>com/yl/domain/Person.hbm.xml</value>
+	      <value>com/yl/domain/Category.hbm.xml</value>
+	      <value>com/yl/domain/Board.hbm.xml</value>
+	      <value>com/yl/domain/Post.hbm.xml</value>
+	      <value>com/yl/domain/Reply.hbm.xml</value>
+	    </list>
+     </property>
+     <property name="hibernateProperties">
+	    <value>
+	        	hibernate.dialect=org.hibernate.dialect.MySQLDialect
+	        	hibernate.hbm2ddl.auto=update
+				hibernate.show_sql=true	      
+	 </value>
+    </property>
+</bean>
+<!-- 配置事务管理器，统一管理sessionFactory的事务 ，又是spring提供的类-->
+<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+  	<property name="sessionFactory" ref="sessionFactory"/>
+</bean>
+<!-- 启用事务注解 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+
+<!-- 配置service类 -->
+<bean id="baseService" class="com.yl.service.imp.BaseService">
+  <property name="sessionFactory" ref="sessionFactory"></property>
+</bean>
+<bean id="categoryService" class="com.yl.service.imp.CategoryService" parent="baseService">
+
+</bean>
+<bean id="boardService" class="com.yl.service.imp.BoardService"  parent="baseService">
+</bean>
+<bean id="postService" class="com.yl.service.imp.PostService"  parent="baseService">
+</bean>
+<bean id="personService" class="com.yl.service.imp.PersonService"  parent="baseService">
+</bean>
+<bean id="replyService" class="com.yl.service.imp.ReplyService"  parent="baseService">
+</bean>
+
+<!-- 配置action -->
+<bean name="/mainUi" scope="prototype" class="com.yl.web.actions.gotoMainUiAction">
+<property name="bsi" ref="baseService"></property>
+</bean>
+<bean name="/login" scope="prototype" class="com.yl.web.actions.LoginAction">
+<property name="psi" ref="personService"></property>
+</bean>
+<bean name="/category" scope="prototype" class="com.yl.web.actions.CategoryAction">
+<property name="csi" ref="categoryService"></property>
+</bean>
+<bean name="/board" scope="prototype" class="com.yl.web.actions.BoardAction">
+<property name="bsi" ref="boardService"></property>
+</bean>
+<bean name="/post" scope="prototype" class="com.yl.web.actions.PostAction">
+<property name="psi" ref="postService"></property>
+</bean>
+<bean name="/person" scope="prototype" class="com.yl.web.actions.PersonAction">
+<property name="psi" ref="personService"></property>
+</bean>
+<bean name="/reply" scope="prototype" class="com.yl.web.actions.ReplyAction">
+<property name="rsi" ref="replyService"></property>
+</bean>
+</beans>

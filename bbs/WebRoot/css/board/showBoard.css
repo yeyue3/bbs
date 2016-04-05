@@ -1,0 +1,49 @@
+.box{
+	width: 986px;
+	padding:7px;
+	position: absolute;
+	top: 102px;
+}
+
+/*
+发帖按钮
+*/
+.postin form input{
+	width:80px;
+	height:30px;
+	padding:0;
+	margin:0;
+	font-size:16px;
+	float: left;
+	}
+
+/*
+分页
+*/
+.page{
+	float:right;
+	height:30px;
+	padding-right:7px; 
+}
+.page a{
+	margin-top:4px;
+	margin-left:7px;
+	float:left;	
+	font-size: 12px;
+	font-style: italic;
+}
+
+/*
+帖子列表
+*/
+.postList{
+	margin-top:7px;
+	float: left;
+	clear: left;
+}
+.postList table{
+	text-align: center;
+}
+.postList a{
+	font-size: 14px;
+}

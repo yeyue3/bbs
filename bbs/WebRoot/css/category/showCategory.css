@@ -1,0 +1,21 @@
+.box{
+	position: absolute;
+	top: 102px;
+	padding:7px;
+	width:986px; 
+}
+.cate{
+	margin-bottom: 7px;
+	border-bottom: 1px gray solid;
+	}
+.board{
+	margin-top:7px;
+	border-bottom: 1px gray solid;
+}
+.board span{
+	float: right;
+}
+.board a{
+	color: blue;
+	font-style: italic;
+}

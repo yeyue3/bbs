@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	
+	<hibernate-mapping package="com.yl.domain">
+		<class name="Post" table="post">
+		<id name="id" type="java.lang.Integer">
+		<generator class="increment"/>
+		</id>	
+	<!-- 
+	private Integer id;
+	private String title;
+	private String content;
+	private String ipCreated;
+	private Integer hit;
+	private Date dateLastReplied;
+	private Boolean readonly;
+	private Boolean topped;
+	private Integer replyCount;
+	
+	private Board board;//所属版面
+	private Person author;//发帖人
+	private Person lastReplied;
+	private Set<Reply> replys;//回帖
+	 -->
+	 <property name="title" type="java.lang.String">
+	<column name="title" length="64" not-null="true"/>
+	</property>
+	<property name="content" type="java.lang.String">
+	<column name="content" length="500" not-null="true" />
+	</property>
+	<property name="hit" type="java.lang.Integer">
+	<column name="hit"/>
+	</property>
+	<property name="dateLastReplied" type="java.util.Date">
+	<column name="dateLastReplied"/>
+	</property>
+	<property name="readonly" type="java.lang.String">
+	<column name="readonly"/>
+	</property>
+	<property name="topped" type="java.lang.String">
+	<column name="topped"/>
+	</property>
+	<property name="replyCount" type="java.lang.Integer">
+	<column name="replyCount"/>
+	</property>
+	<property name="postTime" type="java.util.Date">
+	<column name="postTime"/>
+	</property>
+	
+	<many-to-one name="author" column="author_id" ></many-to-one>
+	<many-to-one name="lastReplied" column="last_id"></many-to-one>
+	<many-to-one name="board" column="board_id"></many-to-one>
+	<set name="replys">
+	<key column="post_id"></key>
+	<one-to-many class="Reply"></one-to-many>
+	</set>
+		</class>
+	</hibernate-mapping>

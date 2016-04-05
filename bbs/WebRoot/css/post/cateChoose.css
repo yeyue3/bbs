@@ -1,0 +1,20 @@
+.box{
+	border:1px blue solid;
+	position: absolute;
+	width:1000px;
+	padding:0;
+	margin:0;
+	top: 102px;
+	floate:left;
+}
+
+.cate{
+	width:1000px;
+	height:60px;
+	padding:0;
+	margin:10px 10px 10px;
+}
+.cate span{
+	margin:10px;
+	color: #2F4F4F;
+}
