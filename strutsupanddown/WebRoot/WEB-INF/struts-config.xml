@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+  <form-beans>
+  <form-bean name="userForm" type="com.yl.web.forms.UserForm"/>
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+  <action path="/regi" name="userForm" type="com.yl.web.actions.RegiAction">
+  <forward name="ok" path="/WEB-INF/loginOk.jsp" />
+  <forward name="err" path="/WEB-INF/err.jsp" />
+  </action>
+  
+   <action path="/show" name="userListAction" type="com.yl.web.actions.UserListAction">
+  <forward name="mainView" path="/WEB-INF/mainView.jsp" />
+  </action>
+  
+  <action path="/download" name="download" type="com.yl.web.actions.DownloadAction">
+  <forward name="back" path="/WEB-INF/mainView.jsp" />
+  </action>
+  
+  </action-mappings>
+  <message-resources parameter="com.yourcompany.struts.ApplicationResources" />
+</struts-config>
+
